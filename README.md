@@ -19,7 +19,7 @@ pip install -r requirements.txt
 ## Clone this repository
 
 ```
-https://github.com/hardcode-express/MEGASONHO-API.git
+https://github.com/Diqxy1/Viktor.git
 ```
 
 ## Start the server
