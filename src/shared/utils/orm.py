@@ -3,8 +3,8 @@ import asyncpg
 async def create_if_not_exist(_user, _database, _password, _port, _host):
     try:
         conn = await asyncpg.connect(
-            host='localhost',
-            port='45432',
+            host=_host,
+            port=_port,
             password=_password,
             database=_database,
             user=_user,
