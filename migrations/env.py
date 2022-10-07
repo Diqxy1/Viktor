@@ -65,7 +65,7 @@ async def run_migrations_online() -> None:
 
     db = DatabaseUrl()
 
-    await create_if_not_exist(db._user, db._database, db._password)
+    await create_if_not_exist(db._user, db._database, db._password, db._port, db._host)
 
     connectable = AsyncEngine(
         engine_from_config(
