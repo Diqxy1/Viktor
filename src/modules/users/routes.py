@@ -1,13 +1,19 @@
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 
+import requests
+
 from src.config.database import get_database
+from src.config.env import env
 
 from src.modules.users.models import CreateUserModel, UserModel
-from src.modules.users.services.create_user_service import CreateUserService
-from src.modules.users.services.detail_user_service import DetailUserService
-from src.modules.users.services.update_user_service import UpdateUserService
-from src.modules.users.services.delete_user_service import DeleteUserService
+from src.modules.users.services import (
+    CreateUserService,
+    DetailUserService,
+    UpdateUserService,
+    DeleteUserService
+)
+
 
 
 router = APIRouter(
@@ -48,3 +54,8 @@ async def update_user(
 ):
     service = DeleteUserService(db)
     return await service.execute(uuid)
+
+@router.get('/get-location/')
+async def get_location():
+    my_ip = requests.get(env.get_item("URL", None))
+    return my_ip.json()

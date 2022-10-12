@@ -14,6 +14,7 @@ class UserRepository:
         async with self._db:
             user = User(**model.dict())
             user.uuid = str(uuid4())
+            user.code_reference = f"{model.document[3:]}{model.phone}"
 
             self._db.add(user)
 
@@ -55,5 +56,29 @@ class UserRepository:
                 await self._db.commit()
 
                 return True
-            finally:
+            except:
                 return False
+
+    async def get_by_email(self, email: str) -> UserModel:
+        async with self._db:
+            user_entity = await self._db.execute(select(User).where(User.email == email))
+
+            user = user_entity.scalar()
+
+            return UserModel.from_orm(user) if user else None
+
+    async def get_by_phone(self, phone: str) -> UserModel:
+        async with self._db:
+            user_entity = await self._db.execute(select(User).where(User.phone == phone))
+
+            user = user_entity.scalar()
+
+            return UserModel.from_orm(user) if user else None
+
+    async def get_by_document(self, document: str) -> UserModel:
+        async with self._db:
+            user_entity = await self._db.execute(select(User).where(User.document == document))
+
+            user = user_entity.scalar()
+
+            return UserModel.from_orm(user) if user else None
