@@ -2,9 +2,10 @@ from decouple import config
 
 class DatabaseUrl:
 
-    def __init__(self, host: str = None, port: str = None, engine: str = None,
-                 driver: str = None, database: str = None, user: str = None, password: str = None,
-                 charset: str = None):
+    def __init__(
+        self, host: str = None, port: str = None, engine: str = None, driver: str = None,
+        database: str = None, user: str = None, password: str = None, charset: str = None
+        ):
         self._host = host or config('DB_HOST')
         self._port = port or config('DB_PORT')
         self._engine = engine or config('DB_ENGINE')
